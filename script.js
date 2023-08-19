@@ -1,63 +1,76 @@
-const body = document.body
+// Obtenir une référence à l'élément <body>
+const body = document.body;
 
-const btnTheme = document.querySelector('.fa-moon')
-const btnHamburger = document.querySelector('.fa-bars')
+// Obtenir les références à l'icône de la lune (commutateur de thème) et à l'icône de menu hamburger
+const btnTheme = document.querySelector('.fa-moon');
+const btnHamburger = document.querySelector('.fa-bars');
 
+// Fonction pour ajouter des classes liées au thème au body et à l'icône
 const addThemeClass = (bodyClass, btnClass) => {
-  body.classList.add(bodyClass)
-  btnTheme.classList.add(btnClass)
-}
+  body.classList.add(bodyClass);
+  btnTheme.classList.add(btnClass);
+};
 
-const getBodyTheme = localStorage.getItem('portfolio-theme')
-const getBtnTheme = localStorage.getItem('portfolio-btn-theme')
+// Obtenir les paramètres du thème depuis le stockage local
+const getBodyTheme = localStorage.getItem('portfolio-theme');
+const getBtnTheme = localStorage.getItem('portfolio-btn-theme');
 
-addThemeClass(getBodyTheme, getBtnTheme)
+// Appliquer les paramètres du thème stockés
+addThemeClass(getBodyTheme, getBtnTheme);
 
-const isDark = () => body.classList.contains('dark')
+// Fonction pour vérifier si le thème actuel est sombre
+const isDark = () => body.classList.contains('dark');
 
+// Fonction pour définir le thème et mettre à jour le stockage local
 const setTheme = (bodyClass, btnClass) => {
+  // Supprimer les classes de thème précédemment appliquées
+  body.classList.remove(localStorage.getItem('portfolio-theme'));
+  btnTheme.classList.remove(localStorage.getItem('portfolio-btn-theme'));
 
-	body.classList.remove(localStorage.getItem('portfolio-theme'))
-	btnTheme.classList.remove(localStorage.getItem('portfolio-btn-theme'))
+  // Appliquer les nouvelles classes de thème
+  addThemeClass(bodyClass, btnClass);
 
-  addThemeClass(bodyClass, btnClass)
+  // Stocker les paramètres du thème dans le stockage local
+  localStorage.setItem('portfolio-theme', bodyClass);
+  localStorage.setItem('portfolio-btn-theme', btnClass);
+};
 
-	localStorage.setItem('portfolio-theme', bodyClass)
-	localStorage.setItem('portfolio-btn-theme', btnClass)
-}
-
+// Fonction pour basculer entre les thèmes sombre et clair
 const toggleTheme = () =>
-	isDark() ? setTheme('light', 'fa-moon') : setTheme('dark', 'fa-sun')
+  isDark() ? setTheme('light', 'fa-moon') : setTheme('dark', 'fa-sun');
 
-btnTheme.addEventListener('click', toggleTheme)
+// Ajouter un écouteur d'événements à l'icône de commutation de thème
+btnTheme.addEventListener('click', toggleTheme);
 
+// Fonction pour afficher/masquer la liste de navigation lorsque l'icône de menu hamburger est cliquée
 const displayList = () => {
-	const navUl = document.querySelector('.nav__list')
+  const navUl = document.querySelector('.nav__list');
 
-	if (btnHamburger.classList.contains('fa-bars')) {
-		btnHamburger.classList.remove('fa-bars')
-		btnHamburger.classList.add('fa-times')
-		navUl.classList.add('display-nav-list')
-	} else {
-		btnHamburger.classList.remove('fa-times')
-		btnHamburger.classList.add('fa-bars')
-		navUl.classList.remove('display-nav-list')
-	}
-}
+  if (btnHamburger.classList.contains('fa-bars')) {
+    btnHamburger.classList.remove('fa-bars');
+    btnHamburger.classList.add('fa-times');
+    navUl.classList.add('display-nav-list');
+  } else {
+    btnHamburger.classList.remove('fa-times');
+    btnHamburger.classList.add('fa-bars');
+    navUl.classList.remove('display-nav-list');
+  }
+};
 
-btnHamburger.addEventListener('click', displayList)
+// Ajouter un écouteur d'événements à l'icône de menu hamburger
+btnHamburger.addEventListener('click', displayList);
 
+// Fonction pour afficher/masquer le bouton de retour en haut de page
 const scrollUp = () => {
-	const btnScrollTop = document.querySelector('.scroll-top')
+  const btnScrollTop = document.querySelector('.scroll-top');
 
-	if (
-		body.scrollTop > 500 ||
-		document.documentElement.scrollTop > 500
-	) {
-		btnScrollTop.style.display = 'block'
-	} else {
-		btnScrollTop.style.display = 'none'
-	}
-}
+  if (body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+    btnScrollTop.style.display = 'block';
+  } else {
+    btnScrollTop.style.display = 'none';
+  }
+};
 
-document.addEventListener('scroll', scrollUp)
+// Ajouter un écouteur d'événements de défilement pour afficher/masquer le bouton de retour en haut de page
+document.addEventListener('scroll', scrollUp);
+
